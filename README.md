@@ -77,7 +77,7 @@ When this is to your liking, you can do a final 'live' test by doing:
 
 Chuck this into your crontab:
 
-    0 * * * * python ~/twitter_ebooks/twert.py > /dev/null tag_br
+    0 * * * * python ~/twitter_ebooks/twert.py > /dev/null
     0,30 * * * * python ~/twitter_ebooks/twitter_ebooks/reply.py > /dev/null
     0 0 * * * python ~/twitter_ebooks/learn.py > /dev/null
 
