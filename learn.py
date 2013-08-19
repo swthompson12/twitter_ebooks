@@ -1,8 +1,10 @@
-import twitter, os
+import os
 import config
 from simplejson import loads, dumps
 from cobe.brain import Brain
 import db_manager
+
+from twitter import *
 
 b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
 
@@ -15,7 +17,7 @@ if 'accounts' not in state:
     state['accounts'] = {}
 
 
-api = twitter.Api(**config.api)
+api = Twitter(auth=OAuth(**config.api))
 
 b.start_batch_learning()
 
@@ -37,8 +39,8 @@ for account in config.dump_accounts:
         last_tweet = 0
 
     try:
-        timeline = api.GetUserTimeline(
-            account, count=200, since_id=last_tweet,    
+        timeline = api.friends_timeline(
+            id=account, count=200, since_id=last_tweet,    
             include_rts=not config.skip_retweets,
             exclude_replies=config.skip_replies,
     
