@@ -28,33 +28,26 @@ def smart_truncate(content, length=140):
         if len(content) <= length:
             return content
         else:
-        return content[:length].rsplit(' ', 1)[0]
+            return content[:length].rsplit(' ', 1)[0]
 
 for account in config.dump_accounts:
     print "Grabbing tweets for %s" % account
     
+    params = { 'screen_name': account, 'count': 200 }
+    
     if account in state['accounts']:
         last_tweet = long(state['accounts'][account])
+        params['since_id'] = last_tweet
     else:
         last_tweet = 0
 
-    try:
-        timeline = api.friends_timeline(
-            id=account, count=200, since_id=last_tweet,    
-            include_rts=not config.skip_retweets,
-            exclude_replies=config.skip_replies,
-    
-            trim_user=True,
-            include_entities=False
-        )
-    except:
-        continue
+    timeline = api.statuses.user_timeline(**params)
 
     for tweet in timeline:
-        b.learn(tweet.text)
+        b.learn(tweet['text'])
         #add it to the db
-        db_manager.insert_tweet(tweet.text.encode('utf-8', 'replace'), False)
-        last_tweet = max(tweet.id, last_tweet)
+        db_manager.insert_tweet(tweet['text'].encode('utf-8', 'replace'), False)
+        last_tweet = max(tweet['id'], last_tweet)
         tweets += 1
 
     print "%d found..." % tweets
