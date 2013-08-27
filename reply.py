@@ -1,6 +1,6 @@
 import argparse, os
 import twert_helper
-import config
+from botconfig import config
 from twitter import *
 from simplejson import loads, dumps
 
@@ -16,16 +16,16 @@ except:
 if 'last_reply' not in state:
     state['last_reply'] = 0
 
-api = Twitter(auth=OAuth(**config.api))
+api = Twitter(auth=OAuth(**config['api']))
 
 def check_names(rp):
     print rp
-    for name in config.screen_name:     
+    for name in config['screen_name']:
         if rp["user"]["screen_name"].lower() == name.lower():
             return True
     return False
 
-if config.replies:
+if config['replies']:
     if not args.stdout:
         print "Performing replies"
     else:

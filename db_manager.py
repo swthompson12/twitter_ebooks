@@ -3,6 +3,8 @@ import sys, os
 import datetime
 import sqlite3
 
+config = botconfig.read_config()
+
 db = sqlite3.connect('twets.db', detect_types=sqlite3.PARSE_DECLTYPES) 
 db.text_factory = str
 

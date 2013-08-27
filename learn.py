@@ -1,10 +1,12 @@
 import os
-import config
+from botconfig import config
 from simplejson import loads, dumps
 from cobe.brain import Brain
 import db_manager
 
 from twitter import *
+
+config = botconfig.read_config()
 
 b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
 
@@ -17,7 +19,7 @@ if 'accounts' not in state:
     state['accounts'] = {}
 
 
-api = Twitter(auth=OAuth(**config.api))
+api = Twitter(auth=OAuth(**config['api']))
 
 b.start_batch_learning()
 
@@ -30,7 +32,7 @@ def smart_truncate(content, length=140):
         else:
             return content[:length].rsplit(' ', 1)[0]
 
-for account in config.dump_accounts:
+for account in config['dump_accounts']:
     print "Grabbing tweets for %s" % account
     
     params = { 'screen_name': account, 'count': 200 }

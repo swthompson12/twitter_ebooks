@@ -1,5 +1,5 @@
 import argparse, sys, os
-import config
+from botconfig import config
 import twert_helper
 from twitter import *
 
@@ -10,7 +10,7 @@ parser.add_argument('-t', '--tweet', help="Tweet arbitrary text instead of using
 
 args = parser.parse_args()
 
-t = Twitter(auth = OAuth(**config.api))
+t = Twitter(auth = OAuth(**config['api']))
 
 if args.tweet:
     t.statuses.update(args.tweet)

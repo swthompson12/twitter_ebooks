@@ -2,7 +2,7 @@ import Levenshtein
 import os
 import re
 import db_manager
-import config
+from botconfig import config
 from cobe.brain import Brain
 
 #load blacklist
