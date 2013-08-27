@@ -32,7 +32,6 @@ if config['replies']:
         print "Printing test replies (dry-run)"
     
     last_tweet = long(state['last_reply'])
-    print "LAST TWEET IS", last_tweet
     
     replies = None
     if last_tweet:

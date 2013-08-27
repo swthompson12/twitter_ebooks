@@ -6,10 +6,12 @@ def read_config(filename = 'botrc'):
     config = None
     with open(filename) as handle:
         try:
-            config = yaml.load(file)
-        except yaml.constructor.ConstructorError
-            print >> sys.stderr "Your botrc is not set up correctly."
-            sys.exit(0)
+            config = yaml.load(handle)
+        except yaml.constructor.ConstructorError as e:
+            print >> sys.stderr, "Your botrc file was mangled. Did you remember to fill it in?"
+            print >> sys.stderr, "Original error follows:"
+            print >> sys.stderr, str(e)
+    return sys.exit(1) if not config else config
 
 config = read_config()
 

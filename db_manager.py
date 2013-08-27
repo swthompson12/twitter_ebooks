@@ -5,9 +5,6 @@ import sys
 
 from botconfig import config
 
-
-config = botconfig.read_config()
-
 path = os.path.join(os.path.dirname(__file__), 'twets.db')
 db = sqlite3.connect('twets.db', detect_types=sqlite3.PARSE_DECLTYPES) 
 db.text_factory = str
@@ -20,12 +17,12 @@ def get_tweets():
         cur.execute("CREATE TABLE IF NOT EXISTS tweets(content TEXT, date TIMESTAMP, ours BOOLEAN)")
         #get all the tweets!
         for t in cur.execute('SELECT * FROM tweets'):
-            if t[2] == False or datetime.datetime.now() - t[1] > datetime.timedelta(hours = config.log_time):
+            if t[2] == False or datetime.datetime.now() - t[1] > datetime.timedelta(hours = config['log_time']):
                 tweets_from_db.append(str(t[0]))
         #list to hold tweets from txt files
         txt_tweets = []
         #open the file used to prime the brain
-        for f in config.brain_tweets:
+        for f in config['brain_tweets']:
             #shove those pieces of shit into a list
             txt_tweets += [line.strip() for line in openfile(f)]
         #return both lists combined
@@ -44,7 +41,7 @@ def insert_tweet(content, ours=True):
 
 def openfile(path):
     #note: i don't actually know if you have to close + reopen a file to change the mode soooo
-    if(len(config.brain_tweets[0]) == 0):
+    if(len(config['brain_tweets'][0]) == 0):
         return ['']
     if os.path.exists(os.path.join(os.path.dirname(__file__), path)) == False:
         txtfile = open(os.path.join(os.path.dirname(__file__), path), "w")

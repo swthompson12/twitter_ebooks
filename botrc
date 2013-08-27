@@ -1,17 +1,17 @@
 # Get these from dev.twitter.com
-api:
-  consumer_key: !!string 
-  consumer_secret: !!string
-  token: !!seq
-  token_secret: !!string
+api: !!map
+  consumer_key: !!str
+  consumer_secret: !!str
+  token: !!str
+  token_secret: !!str
 
 # List of accounts that learn.py should grab tweets from.
 # example: [ "petfurniture", "direlog" ]
-dump_accounts: !!list
+dump_accounts: ['ineptune_']
 
 # the text file(s) you used to prime the brain should be included here
 # old log files should also be included here if you're upgrading from the old version that used text files to log everything
-brain_tweets: !!list
+brain_tweets: [ 'tweets.txt' ]
 
 # skip replies when learning?
 skip_replies: True
@@ -23,11 +23,15 @@ skip_retweets: True
 replies: True
 
 # Your screen_replies from MUST contain your bots screen name
-screen_name: !!seq
+screen_name: !!list
 
 # Filter urls?
 filter_urls: True
 
+# how long should the bot avoid repeating a specific tweet it's made, in hours?
+# by the way, this is tracked on a per tweet basis now COOL WOW NICE DUDE
+log_time: 72
+
 #blacklist of words or phrases to reject tweets based on
 #be sure to include spaces!! for example "is" will give a false positive and match "this", but " is " (note the spaces) won't.
-blacklist: null
+blacklist: []

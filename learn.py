@@ -6,8 +6,6 @@ import db_manager
 
 from twitter import *
 
-config = botconfig.read_config()
-
 b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
 
 try:
@@ -35,7 +33,7 @@ def smart_truncate(content, length=140):
 for account in config['dump_accounts']:
     print "Grabbing tweets for %s" % account
     
-    params = { 'screen_name': account, 'count': 200 }
+    params = { 'screen_name': account, 'count': 200, 'exclude_replies': True, 'include_rts': False }
     
     if account in state['accounts']:
         last_tweet = long(state['accounts'][account])

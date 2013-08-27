@@ -1,0 +1,11 @@
+.Python
+.state
+bin/
+*.pyc
+cobe.*
+include/lib
+*.csv
+*.txt
+twets.db
+include/
+lib/

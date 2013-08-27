@@ -2,19 +2,19 @@ import Levenshtein
 import os
 import re
 import db_manager
-from HTMLParser import parser
+from HTMLParser import HTMLParser
 from botconfig import config
 from cobe.brain import Brain
 
 #load blacklist
-blacklist = config.blacklist
+blacklist = config['blacklist']
 #get all our tweets
 lines = db_manager.get_tweets()
 
 #check tweet vs text files and reject if >70% the same as a tweet up in there or if it contains a blacklisted word
 #also reject any blank tweets (this condition can happen when filtering urls)
 def check_tweet(content):
-    for k in config.blacklist:
+    for k in config['blacklist']:
         # makes the blacklist case insensitive
         if k.lower() in content.lower():
             print "[debug] Rejected (blacklist): " + content
@@ -50,7 +50,7 @@ def create_tweet(catalyst=''):
 
     while True:
         tweet = b.reply(catalyst).encode('utf-8', 'replace')
-        if(config.filter_url):
+        if(config['filter_urls']):
             tweet = remove_url(tweet)
         tweet = smart_truncate(tweet)
         #make sure we're not tweeting something close to something else in the txt files
