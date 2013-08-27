@@ -15,8 +15,6 @@ This update comes with some new features:
 - Option in the configuration file to filter URLs
 - Feed greptweet.com text files directly to process.py and it removes all the junk for you automatically for easier setup
 
-Here's how to set it up (instructions modified from Thom, et. al):
-
 ###REQUIREMENTS
 
 - Any decent linux distro.
@@ -30,6 +28,7 @@ Here's how to set it up (instructions modified from Thom, et. al):
 - ch to the ebooks folder and run:
   - `python process.py tweetfile.txt`
 - This removes the timestamps, direct replies, retweets, blank lines, and fixes some HTML entities that greptweets leaves in.
+- Alternatively, if your friends download their Twitter archives and send them to you, use process_csv.py instead.
 
 ###CREATE APP
 
@@ -46,25 +45,20 @@ Here's how to set it up (instructions modified from Thom, et. al):
 ###INSTALL PYTHON DEPENDENCIES
 
 (This will assume that you have installed python-distribute through your package manager.)
-- Execute these commands (with superuser privileges): 
-  - `easy_install cobe`
-  - `easy_install python-Levenshtein`
-  - `easy_install https://github.com/postcasio/python-twitter/tarball/master`
-- (If you're on ubuntu, use apt-get install for these packages. If easy_install gives you trouble use pip install.)
-- Now download twitter_ebooks https://github.com/markhamilton/twitter_ebooks/tarball/master 
-- Untar this into your ebooks folder
+  - Now download twitter_ebooks https://github.com/patrickt/twitter_ebooks/tarball/master 
+  - Make sure you have 'pip', the python distribution manager installed.
+    - `pip install -r requirements.txt`
+  - You may need gcc and python-devel. Get them from your package manager.
 
 ###CREATE YOUR ROBOT 
 
-- Rename the `config-example.py` to `config.py` and edit it.
+- Edit the YAML file in the botrc file.
 - Put the values you saved from your application earlier in the 'api' bit.
 - Follow the instructions for the remainder of the config file. It's well commented 
 
 ###DO THIS IN ORDER
 
-1. `cobe init` (this creates an empty cobe brain in the current directory) 
 2. `python learn.py` (This is only necessary if you enabled auto-learning. This sets the initial "last tweet learned" so you do not feed the bot a tweet twice. on arch this must be python2 learn.py) 
-3. `rm cobe.brain cobe.brain-journal` (this deletes the brain. we're going to create a new one using the file you prepared earlier) 
 4. `cobe learn tweetfile.txt` (this creates a new brain, using the file you prepared earlier as training) 
 
 Your bot is now ready! test it locally (this won't tweet anything) with:
@@ -78,7 +72,7 @@ When this is to your liking, you can do a final 'live' test by doing:
 Chuck this into your crontab:
 
     0 * * * * python ~/twitter_ebooks/twert.py > /dev/null
-    0,30 * * * * python ~/twitter_ebooks/twitter_ebooks/reply.py > /dev/null
+    0,30 * * * * python ~/twitter_ebooks/reply.py > /dev/null
     0 0 * * * python ~/twitter_ebooks/learn.py > /dev/null
 
 **REMEMBER THAT THE DIRECTORIES GIVEN ARE EXAMPLES AND THAT YOU NEED TO CHANGE THEM TO REFLECT WHERE THE SCRIPT AND BRAIN ACTUALLY ARE**
