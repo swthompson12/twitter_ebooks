@@ -10,7 +10,8 @@ def read_config(filename = 'botrc'):
         except yaml.constructor.ConstructorError
             print >> sys.stderr "Your botrc is not set up correctly."
             sys.exit(0)
-    return config
+
+config = read_config()
 
 if __name__ == '__main__':
     print read_config()

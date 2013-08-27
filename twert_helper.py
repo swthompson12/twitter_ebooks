@@ -2,6 +2,7 @@ import Levenshtein
 import os
 import re
 import db_manager
+from HTMLParser import parser
 from botconfig import config
 from cobe.brain import Brain
 
@@ -57,7 +58,9 @@ def create_tweet(catalyst=''):
         if check_tweet(tweet) or i >= 100:
             break
         i += 1
-        
+    
+    tweet = HTMLParser().unescape(tweet)
+    
     #put the tweet in the db
     db_manager.insert_tweet(tweet)
 
