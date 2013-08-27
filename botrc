@@ -7,11 +7,11 @@ api: !!map
 
 # List of accounts that learn.py should grab tweets from.
 # example: [ "petfurniture", "direlog" ]
-dump_accounts: ['ineptune_']
+dump_accounts: []
 
 # the text file(s) you used to prime the brain should be included here
 # old log files should also be included here if you're upgrading from the old version that used text files to log everything
-brain_tweets: [ 'tweets.txt' ]
+brain_tweets: []
 
 # skip replies when learning?
 skip_replies: True

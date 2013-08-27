@@ -5,7 +5,6 @@ bin/
 cobe.*
 include/lib
 *.csv
-*.txt
 twets.db
 include/
 lib/

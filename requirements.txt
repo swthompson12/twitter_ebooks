@@ -1,0 +1,9 @@
+PyStemmer==1.2.0
+PyYAML==3.10
+argparse==1.2.1
+cobe==2.1.0
+python-Levenshtein==0.10.2
+python-irclib==0.4.8
+simplejson==3.3.0
+twitter==1.10.0
+wsgiref==0.1.2
