@@ -2,11 +2,10 @@ import datetime
 import os
 import sqlite3
 import sys
-
 from botconfig import config
 
-path = os.path.join(os.path.dirname(__file__), 'twets.db')
-db = sqlite3.connect('twets.db', detect_types=sqlite3.PARSE_DECLTYPES) 
+dbpath = os.path.join(os.path.dirname(__file__), 'twets.db')
+db = sqlite3.connect(dbpath, detect_types=sqlite3.PARSE_DECLTYPES) 
 db.text_factory = str
 
 def get_tweets():
