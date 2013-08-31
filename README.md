@@ -2,12 +2,14 @@
 
 This is an update to https://github.com/clonepa/twitter_ebooks, which is an update to postcasio's version, which is an update to thom's version.
 
-3 non-standard twitter dependencies:
-- Levenshtein - http://pypi.python.org/pypi/python-Levenshtein/
-- Cobe - https://github.com/pteichman/cobe
-- Python-Twitter - Appears to be dead, I'm mirroring it here for now: http://fatalshapes.net/twitter.py
+Non-standard twitter dependencies:
+* python-Levenshtein - http://pypi.python.org/pypi/python-Levenshtein/
+* cobe - https://github.com/pteichman/cobe
+* twitter - https://pypi.python.org/pypi/twitter
+* yaml – http://pyyaml.org
+* simplejson
 
-(There are two common twitter api modules, make sure you grab the right one if you're using a package manager.)
+Use `pip` and `virtualenv` and you can install them all automatically and without clobbering existing features.
 
 This update comes with some new features:
 - Centralized Tweeting Code
@@ -17,7 +19,7 @@ This update comes with some new features:
 
 ###REQUIREMENTS
 
-- Any decent linux distro.
+- Any decent linux distro. OS X works too.
 - A new twitter account 
 - The files from this package. Just unzip them into a folder in your user folder (here on out referred to as the ebooks folder)
 
