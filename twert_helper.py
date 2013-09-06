@@ -5,11 +5,14 @@ import db_manager
 from HTMLParser import HTMLParser
 from botconfig import config
 from cobe.brain import Brain
+import datetime
 
 #load blacklist
 blacklist = config['blacklist']
 #get all our tweets
 lines = db_manager.get_tweets()
+
+today_is_friday = datetime.date.today().weekday() == 4
 
 #check tweet vs text files and reject if >70% the same as a tweet up in there or if it contains a blacklisted word
 #also reject any blank tweets (this condition can happen when filtering urls)
@@ -26,6 +29,9 @@ def check_tweet(content):
         if content.strip(' \t\n\r').lower() in line.strip(' \t\n\r').lower():
             print "[debug] Rejected (Identical): " + content
             return False
+    if "#ff" in content and not today_is_friday:
+        print "[debug] Rejected (#ff)"
+        return False
     if len(content) == 0:
         print "[debug] Rejected (empty)"
         return False
