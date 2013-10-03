@@ -1,10 +1,11 @@
 import twitter
 import sys
+import os
 import yaml
 
 def read_config(filename = 'botrc'):
     config = None
-    with open(filename) as handle:
+    with open(os.path.join(os.path.dirname(__file__), filename)) as handle:
         try:
             config = yaml.load(handle)
         except yaml.constructor.ConstructorError as e:
