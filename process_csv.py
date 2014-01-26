@@ -8,11 +8,11 @@ for filename in glob.glob('*.csv'):
 
     # open the file and parse it as csv
     with open(filename, 'rb') as csvfile:
-        tweetreader = csv.reader(csvfile)
+        tweetreader = csv.DictReader(csvfile)
         for tweet in tweetreader:
-            # the actual text is in the 8th position of the csv
-            text = tweet[7]
-
+            text = tweet["text"]
+            print text
+            
             # add it to the tweetlist if it isn't a reply or retweet
             if not text.startswith('@') and not text.startswith('RT'):
                 tweets.append(text)
