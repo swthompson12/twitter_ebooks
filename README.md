@@ -25,12 +25,8 @@ This update comes with some new features:
 
 ###PREPARING TWEETS
 
-- Go to greptweet.com and fetch the tweets of your desired user(s)
-- Save as .txt file in your ebooks folder
-- ch to the ebooks folder and run:
-  - `python process.py tweetfile.txt`
-- This removes the timestamps, direct replies, retweets, blank lines, and fixes some HTML entities that greptweets leaves in.
-- Alternatively, if your friends download their Twitter archives and send them to you, use process_csv.py instead.
+- Download your Twitter archive. There will be a `tweets.csv` file present therein. Move that into the twitter_ebooks folder. 
+- Run `cobe brain init; process.py`.
 
 ###CREATE APP
 

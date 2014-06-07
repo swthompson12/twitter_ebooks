@@ -1,30 +1,24 @@
-import argparse
-import re
+import re, os, glob, csv
 
-parser = argparse.ArgumentParser(description="Prep a file directly from greptweet.com (but doesn't import it into the brain). This will replace the contents of the existing file.")
-parser.add_argument('file', metavar='file', type=str, help='A file filled with raw tweet data')
-args = parser.parse_args()
+tweets = []
+ignored = 0
 
-contents = open(args.file, "r").read()
+# for each csv file
+for filename in glob.glob('*.csv'):
 
-# remove timestamps
-contents = re.sub(r'^.*\|.*\|', '', contents, flags=re.MULTILINE)
+    # open the file and parse it as csv
+    with open(filename, 'rb') as csvfile:
+        tweetreader = csv.DictReader(csvfile)
+        for tweet in tweetreader:
+            text = tweet["text"]
+            print text
+            
+            # add it to the tweetlist if it isn't a reply or retweet
+            if not text.startswith('@') and not text.startswith('RT'):
+                tweets.append(text)
+            else:
+                ignored += 1
 
-# remove retweets
-contents = re.sub(r'^RT.\@.*', '', contents, flags=re.MULTILINE)
-
-# remove direct replies
-contents = re.sub(r'^@.*$', '', contents, flags=re.MULTILINE)
-
-# remove blank lines (do this twice)
-contents = re.sub(r'^\s', '', contents, flags=re.MULTILINE)
-contents = re.sub(r'^\s', '', contents, flags=re.MULTILINE)
-
-# replace html entities (twitter is sloppy)
-contents = contents.replace('&gt;', '>')
-contents = contents.replace('&lt;', '<')
-contents = contents.replace('&amp;', '&')
-
-# write it all back to the same file.
-open(args.file, "w").write(contents)
-print( 'Processed {} ({} chars)'.format(args.file, len(contents) ) )
+# we have all the tweets now! throw em in a file, one per line
+open('./tweets.txt', 'w').write('\n'.join(tweets))
+print "Processed %d tweets (ignored %d)" % (len(tweets), ignored)
