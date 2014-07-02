@@ -3,6 +3,7 @@ import twert_helper
 from botconfig import config
 from twitter import *
 from simplejson import loads, dumps
+import string
 
 parser = argparse.ArgumentParser(description="Checks for recent unanswered @mentions and replies to them individually")
 parser.add_argument('-o', '--stdout', action='store_true', help="Shows replies without actually sending to twitter")
