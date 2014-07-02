@@ -42,8 +42,11 @@ if config['replies']:
     for reply in replies:
         if check_names(reply):
             continue
-        # try:
-        reply_tweet = twert_helper.create_tweet(reply["text"].encode('utf-8', 'replace')).encode('utf-8', 'replace')
+        
+        tweet_text = reply["text"].encode('utf-8', 'replace')
+        tweet_text = string.lstrip(tweet_text, "@" + config["screen_name"])
+        
+        reply_tweet = twert_helper.create_tweet().encode('utf-8', 'replace')
         reply_tweet = twert_helper.smart_truncate('@%s %s' % (reply["user"]["screen_name"].encode('utf-8', 'replace'), reply_tweet))
         if not args.stdout:
             api.statuses.update(status=reply_tweet, in_reply_to_status_id=reply["id"])
