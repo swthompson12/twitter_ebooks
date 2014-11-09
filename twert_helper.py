@@ -32,6 +32,8 @@ def check_tweet(content):
     if "#ff" in content and not today_is_friday:
         print "[debug] Rejected (#ff)"
         return False
+    if "@" in content:
+        return False    
     if len(content) == 0:
         print "[debug] Rejected (empty)"
         return False
