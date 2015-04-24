@@ -23,7 +23,7 @@ def check_tweet(content):
             print "[debug] Rejected (blacklist): " + content
             return False
     for line in lines:
-        if Levenshtein.ratio(re.sub(r'\W+', '', content.lower()), re.sub(r'\W+', '', line.lower())) >= 0.70:
+        if Levenshtein.ratio(re.sub(r'\W+', '', content.lower()), re.sub(r'\W+', '', line.lower())) >= 0.85:
             print "[debug] Rejected (Levenshtein.ratio): " + content
             return False
         if content.strip(' \t\n\r').lower() in line.strip(' \t\n\r').lower():
@@ -47,8 +47,18 @@ def remove_url(content):
 def smart_truncate(content, length=140):
     if len(content) <= length:
         return content
+    if len(content) > length and content.count('.') > 1:
+        return content[:length].rsplit(' ', 1)[0].rsplit('.', 1)[0]
     else:
         return content[:length].rsplit(' ', 1)[0]
+
+def quote_fixer(content):
+    if content.count('"') == 1:
+        return content.strip('"')
+    if content.count('"') == 3:
+        return content + '"'
+    else:
+        return content
 
 def create_tweet(catalyst=''):
     b = Brain(os.path.join(os.path.dirname(__file__), 'cobe.brain'))
@@ -61,9 +71,10 @@ def create_tweet(catalyst=''):
         if(config['filter_urls']):
             tweet = remove_url(tweet)
         tweet = smart_truncate(tweet)
+        tweet = quote_fixer(tweet)
         #make sure we're not tweeting something close to something else in the txt files
         #or we can just give up after 100 tries
-        if check_tweet(tweet) or i >= 100:
+        if check_tweet(tweet) or i >= 2000:
             break
         i += 1
     
